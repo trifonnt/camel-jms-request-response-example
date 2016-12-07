@@ -86,12 +86,16 @@ public class JavaRequestResponseTest extends CamelTestSupport {
 		RouteBuilder builder = new RouteBuilder() {
 			@Override
 			public void configure() throws Exception {
-				from("file://data?fileName=some-file.txt&noop=true").id("file-consumer")
-					.log("Processing ${file:name}")
+//				from("file://data?fileName=some-file.txt&noop=true").id("file-consumer")
+				from("file://data?noop=true").id("file-consumer")
+					.log("Processing file [${file:name}]")
+					.log("   file content [${body}]")
 					.process(requestProcessor)
-					.log("Generated ${body}")
+					.log("BODY AFTER RequestProcessor [${body}]")
 					.toF("test-broker://queue:%s?exchangePattern=InOut&useMessageIDAsCorrelationID=%b", requestResponseQueueName, useMessageIDAsCorrelationID)
+					.log("BODY AFTER JMS Queue [${body}]")
 					.process(resultProcessor)
+					.log("BODY AFTER ResultProcessor [${body}]")
 					.to("mock://result");
 			}
 		};
