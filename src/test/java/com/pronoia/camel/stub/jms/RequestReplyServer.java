@@ -57,7 +57,7 @@ public class RequestReplyServer extends Thread {
 			try {
 				consumer.close();
 			} catch (JMSException jmsEx) {
-				// Eat this
+				// Ignore it
 			} finally {
 				consumer = null;
 			}
@@ -67,7 +67,7 @@ public class RequestReplyServer extends Thread {
 			try {
 				connection.close();
 			} catch (JMSException jmsEx) {
-				// Eat this
+				// Ignore it
 			} finally {
 				connection = null;
 			}
@@ -77,7 +77,7 @@ public class RequestReplyServer extends Thread {
 			try {
 				session.close();
 			} catch (JMSException jmsEx) {
-				// Eat this
+				// Ignore it
 			} finally {
 				session = null;
 			}
